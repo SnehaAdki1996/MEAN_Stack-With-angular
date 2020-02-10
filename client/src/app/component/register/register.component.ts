@@ -1,3 +1,4 @@
+import { AuthService } from "./../../services/auth.service";
 import { Component, OnInit } from "@angular/core";
 import {
   FormGroup,
@@ -11,7 +12,7 @@ import {
   styleUrls: ["./register.component.scss"]
 })
 export class RegisterComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private auth: AuthService) {
     this.createForm();
   }
 
@@ -94,5 +95,15 @@ export class RegisterComponent implements OnInit {
     };
   }
   ngOnInit() {}
-  logIn() {}
+  logIn() {
+    const user = {
+      email: this.form.get("email").value,
+      password: this.form.get("password").value,
+      userName: this.form.get("username").value
+    };
+    this.auth.registerUser(user).subscribe(res => {
+      console.log(res);
+      this.createForm();
+    });
+  }
 }

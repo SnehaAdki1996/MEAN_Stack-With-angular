@@ -19,10 +19,10 @@ let emailChecker = email => {
   if (!email) {
     return false;
   } else {
-    if (email.length < 5 || email.length > 30) {
-      return false;
-    } else {
+    if (email.length > 5 || email.length > 30) {
       return true;
+    } else {
+      return false;
     }
   }
 };
@@ -40,7 +40,7 @@ let passwordChecker = password => {
   if (!password) {
     return false;
   } else {
-    if (email.length < 5 || email.length > 15) {
+    if (password.length > 5 || password.length > 15) {
       return true;
     } else {
       return false;

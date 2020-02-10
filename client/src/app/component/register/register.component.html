@@ -1,5 +1,5 @@
 <h1 class="page-header">Registration Page</h1>
-<form [formGroup]="form">
+<form [formGroup]="form" (submit)="logIn()">
   <div class="form-group">
     <label for="username">
       User Name:
