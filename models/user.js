@@ -7,7 +7,7 @@ let userNameChecker = userName => {
   if (!userName) {
     return false;
   } else {
-    if (userName.length > 3) {
+    if (userName.length > 3 || userName.length > 15) {
       return true;
     } else {
       return false;
@@ -40,7 +40,7 @@ let passwordChecker = password => {
   if (!password) {
     return false;
   } else {
-    if (password.length > 8) {
+    if (email.length < 5 || email.length > 15) {
       return true;
     } else {
       return false;
