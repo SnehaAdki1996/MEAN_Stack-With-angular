@@ -17,15 +17,14 @@ module.exports = router => {
             password: req.body.password
           });
           user.save(err => {
-            console.log(err.errors);
-            if ("Warning" + err) {
+            if (err) {
               if (err.code == 11000) {
                 res.json({ success: false, message: "Email or user Name already exist" });
               } else {
-                res.json({ success: false, message: "Error while creation User" + err });
+                res.json({ success: false, message: "err while creation User" + err });
               }
             } else {
-              if (err.errors) {
+              if (err != null) {
                 if (err.errors.email) {
                   res.json({ success: false, message: err.errors.email.message });
                 } else {
@@ -40,7 +39,7 @@ module.exports = router => {
                   }
                 }
               } else {
-                res.json({ success: false, message: "user cannot creta error " + err });
+                res.json({ success: true, message: "User Created Successfully" });
               }
             }
           });
