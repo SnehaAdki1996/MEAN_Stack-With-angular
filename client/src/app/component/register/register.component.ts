@@ -17,7 +17,8 @@ export class RegisterComponent implements OnInit {
   }
 
   form: FormGroup;
-
+  message;
+  messageClass;
   createForm() {
     this.form = this.formBuilder.group(
       {
@@ -54,6 +55,18 @@ export class RegisterComponent implements OnInit {
     );
   }
 
+  disableForm() {
+    this.form.controls["email"].disable();
+    this.form.controls["username"].disable();
+    this.form.controls["password"].disable();
+    this.form.controls["confirm"].disable();
+  }
+  enableForm() {
+    this.form.controls["email"].enable();
+    this.form.controls["username"].enable();
+    this.form.controls["password"].enable();
+    this.form.controls["confirm"].enable();
+  }
   validateEmail(controls) {
     const regExp = new RegExp(
       "^(?=^.{10,30}$)(?=^[A-Za-z0-9])[A-Za-z0-9.]+@[A-Za-z0-9]+.[A-Za-z]{2,}"
@@ -96,6 +109,7 @@ export class RegisterComponent implements OnInit {
   }
   ngOnInit() {}
   logIn() {
+    this.disableForm();
     const user = {
       email: this.form.get("email").value,
       password: this.form.get("password").value,
@@ -103,7 +117,14 @@ export class RegisterComponent implements OnInit {
     };
     this.auth.registerUser(user).subscribe(res => {
       console.log(res);
-      this.createForm();
+      if (!res["success"]) {
+        this.messageClass = "alert alert-danger";
+        this.message = res["message"];
+        this.enableForm();
+      } else {
+        this.messageClass = "alert alert-success";
+        this.message = res["message"];
+      }
     });
   }
 }
