@@ -10,8 +10,9 @@
     <div
       [ngClass]="{
         'has-error':
-          form.controls.username.errors && form.controls.username.dirty,
-        'has-success': !form.controls.username.errors
+          (form.controls.username.errors && form.controls.username.dirty) ||
+          (userValid && !form.controls.username.dirty),
+        'has-success': !form.controls.username.errors || userValid
       }"
     >
       <input
@@ -19,6 +20,7 @@
         name="username"
         class="form-control"
         formControlName="username"
+        (blur)="checkUserName()"
       />
       <ul class="help-block">
         <li
@@ -44,8 +46,9 @@
             form.controls.username.dirty
           "
         >
-          Use Name hould not have a special character
+          User Name should not have a special character
         </li>
+        <li *ngIf="userValid">{{ userMessage }}</li>
       </ul>
     </div>
   </div>
@@ -55,8 +58,10 @@
     </label>
     <div
       [ngClass]="{
-        'has-error': form.controls.email.errors && form.controls.email.dirty,
-        'has-success': !form.controls.email.errors
+        'has-error':
+          (form.controls.email.errors && form.controls.email.dirty) ||
+          (emailValid && !form.controls.email.dirty),
+        'has-success': !form.controls.email.errors || emailValid
       }"
     >
       <input
@@ -64,6 +69,7 @@
         name="email"
         class="form-control"
         formControlName="email"
+        (blur)="checkEmail()"
       />
       <ul class="help-block">
         <li
@@ -90,6 +96,7 @@
         >
           Must be valid email
         </li>
+        <li *ngIf="emailValid">{{ emailMessage }}</li>
       </ul>
     </div>
   </div>
@@ -173,7 +180,7 @@
     </div>
   </div>
   <input
-    [disabled]="!form.valid"
+    [disabled]="!form.valid || !emailValid || !userValid"
     type="submit"
     class="btn btn-primary"
     value="Submit"

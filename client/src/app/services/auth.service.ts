@@ -15,4 +15,16 @@ export class AuthService {
       .post(this.domain + "/authentication/register", user)
       .pipe(map(res => res.json()));
   }
+
+  checkUsername(username) {
+    return this.http
+      .get(this.domain + "/authentication/checkUsername/" + username)
+      .pipe(map(res => res.json()));
+  }
+
+  checkEmail(email) {
+    return this.http
+      .get(this.domain + "/authentication/checkEmail/" + email)
+      .pipe(map(res => res.json()));
+  }
 }

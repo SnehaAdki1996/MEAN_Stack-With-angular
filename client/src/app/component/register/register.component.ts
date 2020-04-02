@@ -19,6 +19,10 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   message;
   messageClass;
+  emailValid;
+  emailMessage;
+  userValid;
+  userMessage;
   createForm() {
     this.form = this.formBuilder.group(
       {
@@ -124,6 +128,30 @@ export class RegisterComponent implements OnInit {
       } else {
         this.messageClass = "alert alert-success";
         this.message = res["message"];
+      }
+    });
+  }
+
+  checkEmail() {
+    this.auth.checkEmail(this.form.get("email").value).subscribe(res => {
+      if (res.success) {
+        this.emailValid = true;
+        this.emailMessage = res["message"];
+      } else {
+        this.emailValid = false;
+        this.emailMessage = res["message"];
+      }
+    });
+  }
+
+  checkUserName() {
+    this.auth.checkUsername(this.form.get("username").value).subscribe(res => {
+      if (res.success) {
+        this.userValid = true;
+        this.userMessage = res["message"];
+      } else {
+        this.userValid = false;
+        this.userMessage = res["message"];
       }
     });
   }

@@ -19,7 +19,7 @@ mongoose.connect(config.uri, { useUnifiedTopology: true, useNewUrlParser: true }
 mongoose.set("useCreateIndex", true);
 
 //The below line is used to listen to tehe client
-app.use(cors({ origin: "http://localhost:4200" }));
+app.use(cors({ origin: "http://localhost:4300" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + "/client/dist/client/"));
